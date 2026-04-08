@@ -135,4 +135,4 @@ Este proyecto es para fines de demostración y educación.
 
 ## 📧 Contacto
 
-[Francisco J. Calero Sánchez] - [fcalero.devops.coder@gmail.com] - [www.linkedin.com/in/franciscocalero]
+[Francisco J. Calero Sánchez] - [franciscocalero.coder@gmail.com] - [www.linkedin.com/in/francisco-calero]
