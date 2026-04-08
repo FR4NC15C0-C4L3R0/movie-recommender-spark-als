@@ -1,0 +1,29 @@
+# --- Datos de MovieLens (Gb´s de información) ---
+ml-25m/
+*.csv
+*.zip
+
+# --- Modelos y Persistencia (Archivos pesados) ---
+models/
+checkpoint/
+als_movie_recommender_model/
+
+# --- Entornos Virtuales (Librerías instaladas) ---
+.venv/
+venv/
+env/
+
+# --- Configuraciones de PyCharm ---
+.idea/
+.vscode/
+
+# --- Temporales de Python y Spark ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+derby.log
+metastore_db/
+
+# --- Archivos de sistema ---
+.DS_Store
+Thumbs.db
