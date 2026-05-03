@@ -1,138 +1,112 @@
-# 🎬 Sistema de Recomendación de Películas con Apache Spark
+# 🎬 Spark Cinema AI: Motor de Recomendación Big Data
 
-## 🌟 Visión General del Proyecto
+![Status](https://img.shields.io/badge/Status-Desarrollo_Finalizado-green)
+![Python](https://img.shields.io/badge/Python-3.9+-blue)
+![Spark](https://img.shields.io/badge/Apache_Spark-3.5-orange)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.32-red)
 
-Este proyecto implementa un sistema de recomendación de películas utilizando un enfoque de **Filtrado Colaborativo** basado en el algoritmo **ALS (Alternating Least Squares)**, potenciado por Apache Spark MLlib. El objetivo es predecir las calificaciones que un usuario daría a películas que no ha visto, y así recomendarle nuevos títulos de su interés.
+**Spark Cinema AI** es una solución integral de ingeniería de datos que combina la potencia de procesamiento distribuido de **Apache Spark** con una interfaz moderna y fluida en **Streamlit**. El sistema analiza más de **25 millones de interacciones** (dataset MovieLens 25M) para predecir preferencias y recomendar contenido en tiempo real utilizando Machine Learning a gran escala.
 
-El sistema ha sido desarrollado en Python y utiliza el dataset **MovieLens 25M**, uno de los conjuntos de datos de ratings de películas más grandes y completos disponibles, lo que demuestra la capacidad de Spark para manejar grandes volúmenes de datos de manera eficiente.
+---
 
-## ✨ Características Principales
+## 🚀 Características Principales
 
-* **Procesamiento de Big Data:** Maneja un dataset de 25 millones de ratings con Apache Spark.
-* **Algoritmo ALS:** Utiliza el potente algoritmo ALS para el filtrado colaborativo.
-* **Evaluación del Modelo:** Calcula el RMSE (Root Mean Squared Error) para evaluar la precisión de las predicciones del modelo.
-* **Generación de Recomendaciones:** Genera recomendaciones personalizadas para usuarios y demuestra cómo obtener los títulos de las películas recomendadas.
-* **Entorno Local:** Configurado para ejecutarse localmente, ideal para demostraciones y desarrollo.
+- **Procesamiento de Big Data:** Manejo eficiente de 25 millones de ratings con Apache Spark MLlib.
+- **Algoritmo ALS (Alternating Least Squares):** Implementación de filtrado colaborativo para predicciones de alta precisión.
+- **Interfaz UI "Netflix-Style":** Diseñada en Streamlit con integración dinámica de la **API de TMDB** para visualizar pósters, sinopsis y valoraciones.
+- **Evaluación del Modelo:** Cálculo del **RMSE** (Root Mean Squared Error) para validar la precisión de las predicciones.
+- **Diseño Robusto (UX/UI):** Maquetación CSS personalizada para alineación de cuadrícula y gestión segura de credenciales mediante variables de entorno (`.env`).
 
-## 🚀 Requisitos del Sistema
+---
 
-Antes de ejecutar el proyecto, asegúrate de tener instalados los siguientes requisitos:
+## 🧠 ¿Cómo funciona? (Capas de Ingeniería)
 
-* **Java Development Kit (JDK) 8 o superior:** Spark se ejecuta en la JVM.
-    * Puedes descargarlo desde la [página oficial de Oracle JDK](https://www.oracle.com/java/technologies/downloads/) o [OpenJDK](https://openjdk.org/install/).
-    * Asegúrate de configurar la variable de entorno `JAVA_HOME` para que apunte a tu instalación de JDK.
-* **Python 3.8 o superior:** El script principal está escrito en Python.
-    * Puedes descargarlo desde la [página oficial de Python](https://www.python.org/downloads/).
-* **Apache Spark (versión 3.x recomendada):** El core del proyecto.
-    * Descarga la versión pre-construida con Hadoop (ej., `spark-3.x.x-bin-hadoop3.2.tgz`) desde el [sitio de descargas de Apache Spark](https://spark.apache.org/downloads.html).
-    * Descomprime el archivo en una ubicación accesible (ej., `C:\spark` en Windows o `/opt/spark` en Linux/macOS).
-    * Configura la variable de entorno `SPARK_HOME` para que apunte a la carpeta raíz de Spark.
-    * Añade `%SPARK_HOME%\bin` (Windows) o `$SPARK_HOME/bin` (Linux/macOS) a tu variable de entorno `PATH`.
-* **pySpark:** La API de Python para Spark. Se instalará automáticamente con `pip`.
+El sistema se divide en tres niveles de ejecución:
 
-## 📦 Configuración del Entorno
+1. **Capa de Inteligencia (Backend):** Spark carga el modelo ALS pre-entrenado. Al seleccionar un `userId`, el modelo genera una predicción de puntuación para miles de películas que el usuario no ha visto aún, seleccionando las *N* mejores recomendaciones.
+2. **Capa de Integración (API REST):** La aplicación toma los IDs de Spark y consulta los metadatos visuales en la API de TMDB. Se utiliza un sistema de **placeholders** para garantizar la estabilidad visual si algún dato no está disponible.
+3. **Capa de Presentación (Frontend):** Los resultados se renderizan en una cuadrícula de altura fija mediante contenedores HTML/CSS inyectados, asegurando una estética profesional similar a las plataformas comerciales.
 
-Sigue estos pasos para configurar y ejecutar el proyecto:
+---
 
-1.  **Clonar el Repositorio (o descargar el código):**
-    ```bash
-    git clone [https://github.com/tu_usuario/movie_recommender_project.git](https://github.com/tu_usuario/movie_recommender_project.git)
-    cd movie_recommender_project
-    ```
-    *(Si aún no lo tienes en GitHub, puedes simplemente crear la carpeta y poner los archivos allí.)*
+## 🛠️ Requisitos del Sistema y Stack
 
-2.  **Crear un Entorno Virtual (Recomendado):**
-    ```bash
-    python -m venv .venv
-    ```
+### Requisitos de Infraestructura
+- **Java Development Kit (JDK) 8+:** Spark se ejecuta en la JVM. Es necesario configurar la variable `JAVA_HOME`.
+- **Apache Spark 3.x:** Configurado con la variable de entorno `SPARK_HOME` y añadido al `PATH`.
+- **Python 3.8+:** Lenguaje base para la lógica de negocio y UI.
 
-3.  **Activar el Entorno Virtual:**
-    * **Windows:**
-        ```bash
-        .venv\Scripts\activate
-        ```
-    * **macOS/Linux:**
-        ```bash
-        source .venv/bin/activate
-        ```
+### Tecnologías Utilizadas
+- **Procesamiento:** [Apache Spark](https://spark.apache.org/) (PySpark)
+- **Frontend:** [Streamlit](https://streamlit.io/)
+- **API Externa:** [The Movie Database (TMDB)](https://www.themoviedb.org/)
+- **Gestión de Entorno:** Virtualenv, Conda y `python-dotenv`.
 
-4.  **Instalar Dependencias de Python:**
-    ```bash
-    pip install pyspark findspark
-    ```
+---
 
-5.  **Descargar el Dataset MovieLens 25M:**
-    * Ve a la página de [descargas de MovieLens](https://grouplens.org/datasets/movielens/).
-    * Descarga el archivo `ml-25m.zip`.
-    * Descomprime el contenido (`ratings.csv` y `movies.csv`) en una subcarpeta llamada `ml-25m` dentro de la carpeta raíz de tu proyecto.
-        Tu estructura debería ser similar a:
-        ```
-        movie_recommender_project/
-        ├── .venv/
-        ├── ml-25m/
-        │   ├── ratings.csv
-        │   └── movies.csv
-        ├── main.py
-        ├── README.md
-        └── requirements.txt  (Puedes crearlo con `pip freeze > requirements.txt` después de instalar pySpark)
-        ```
+## ⚙️ Instalación y Configuración
 
-6.  **Configurar `log4j.properties` (Opcional, para reducir el verbosidad de logs):**
-    Para evitar el exceso de mensajes WARN/INFO de Spark, crea un archivo llamado `log4j.properties` en la raíz de tu proyecto con el siguiente contenido:
-    ```properties
-    log4j.rootCategory=WARN, console
-    log4j.appender.console=org.apache.log4j.ConsoleAppender
-    log4j.appender.console.layout=org.apache.log4j.PatternLayout
-    log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n
-    ```
-    Y asegúrate de que tu configuración de SparkSession en `main.py` incluya:
-    `.config("spark.driver.extraJavaOptions", "-Dlog4j.configuration=file:log4j.properties")`
+Sigue estos pasos para poner en marcha el proyecto:
 
-## 🏃‍♀️ Ejecución del Proyecto
+### 1. Preparar el repositorio y el entorno
+```bash
+# Clonar el repositorio
+git clone [https://github.com/tu-usuario/movie_recommender_project.git](https://github.com/tu-usuario/movie_recommender_project.git)
+cd movie_recommender_project
+```
+```bash
+# Crear y activar entorno virtual
+python -m venv .venv
+```
 
-Una vez que todo esté configurado:
+```bash
+# En Windows: .venv\Scripts\activate | En Unix: source .venv/bin/activate
+```
 
-1.  **Asegúrate de que tu entorno virtual esté activado.**
-2.  **Ejecuta el script principal:**
-    ```bash
-    python main.py
-    ```
+```bash
+# Instalar dependencias
+pip install pyspark findspark streamlit python-dotenv
+```
+### 2. Gestión de Datos y Secretos
+Descarga el dataset MovieLens 25M y coloca los archivos ratings.csv y movies.csv en la carpeta ml-25m/.
 
-El script cargará los datos, realizará las transformaciones necesarias, entrenará el modelo ALS, evaluará su rendimiento (RMSE) y finalmente mostrará las recomendaciones para los primeros 5 usuarios y un usuario específico (ID 1).
+Crea un archivo .env en la raíz del proyecto y añade tu Token de TMDB:
 
-> [!IMPORTANT]
-> **Nota sobre el rendimiento:** Para esta demostración, el script utiliza un **muestreo (sampling) del 5%** del dataset original (`fraction=0.05`). Esto permite una ejecución fluida en entornos locales y pruebas rápidas de la interfaz. El modelo es totalmente compatible con el procesamiento de los **25 millones de registros** ajustando dicho parámetro a `1.0`.
+```bash
+TMDB_API_TOKEN=tu_token_aqui_sin_comillas
+```
 
-## 🛠️ Estructura del Código (`main.py`)
+### 3. Ejecución
+Para entrenar/probar el motor Spark: 
+```bash
+python main.py
+```
 
-El archivo `main.py` contiene toda la lógica del sistema de recomendación:
+Para lanzar la interfaz de usuario: 
+```bash 
+streamlit run app.py
+```
 
-* **Inicialización de SparkSession:** Configura el entorno Spark, asignando recursos de memoria (`spark.driver.memory`, `spark.executor.memory`) para manejar el gran volumen de datos.
-* **Carga de Datos:** Lee los datasets `ratings.csv` y `movies.csv` en DataFrames de Spark.
-* **Preprocesamiento y Exploración:** Realiza la limpieza de datos, unión de DataFrames y algunas operaciones exploratorias básicas (conteo, esquema, ratings por usuario, etc.).
-* **Preparación para ALS:** Transforma los datos al formato requerido por el algoritmo ALS (UserID, MovieID, Rating).
-* **División de Datos:** Divide el dataset en conjuntos de entrenamiento y prueba.
-* **Entrenamiento del Modelo ALS:** Configura y entrena el modelo de recomendación ALS.
-* **Evaluación del Modelo:** Utiliza `RegressionEvaluator` para calcular el RMSE del modelo entrenado.
-* **Generación y Procesamiento de Recomendaciones:**
-    * Genera recomendaciones crudas para un conjunto de usuarios.
-    * Filtra las películas ya vistas por el usuario.
-    * Une las recomendaciones con el DataFrame de películas para obtener los títulos y géneros.
-    * Muestra las recomendaciones finales.
-* **Cierre de SparkSession:** Detiene la sesión de Spark para liberar recursos.
+### 📊 Resultados y Análisis del Modelo:
 
-## 📊 Resultados y Análisis del RMSE
+El modelo ALS entrenado ha alcanzado un RMSE de aproximadamente 0.8066. Esto indica que, en promedio, la diferencia entre las calificaciones predichas y las reales es de solo 0.8 puntos en una escala de 0.5 a 5.0, un resultado robusto para un dataset de esta complejidad.
 
-El modelo ALS entrenado ha alcanzado un **RMSE de aproximadamente 0.8066**. Este valor indica que, en promedio, la diferencia entre las calificaciones predichas por el modelo y las calificaciones reales es de aproximadamente 0.8 puntos en una escala de 0.5 a 5.0. Para un dataset de esta magnitud y complejidad, este es un resultado inicial bastante robusto, demostrando la capacidad del modelo para predecir las preferencias de los usuarios con una precisión razonable.
+![IMPORTANTE](https://img.shields.io/badge/!-IMPORTANTE-red)
 
-## 🤝 Contribuciones
+**Nota sobre rendimiento:** Para la demostración fluida en local, se utiliza un muestreo (sampling) del 5% del dataset. El sistema es totalmente escalable al 100% de los datos (25M de registros) ajustando el parámetro fraction a 1.0 en el código.
 
-Si tienes sugerencias o mejoras, no dudes en abrir un *issue* o enviar un *pull request*.
 
-## 📄 Licencia
 
-Este proyecto es para fines de demostración y educación.
+## 👤 Autor
 
-## 📧 Contacto
+**Francisco Calero Sánchez**
 
-[Francisco J. Calero Sánchez] - [franciscocalero.coder@gmail.com] - [www.linkedin.com/in/francisco-calero]
+**· 🌐 [Mi Portafolio](https://portafolio-franciscocalero.onrender.com/)**
+
+**· 🔗 [LinkedIn](https://www.linkedin.com/in/francisco-calero/)**
+
+**· 📧 [Email](mailto:francisco.calero.sanchez@gmail.com)**
+
+***-Este proyecto fue desarrollado como parte de mi especialización en Big Data en Granada, España.-***
+
+---

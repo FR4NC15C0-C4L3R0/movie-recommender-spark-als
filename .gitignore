@@ -27,3 +27,8 @@ metastore_db/
 # --- Archivos de sistema ---
 .DS_Store
 Thumbs.db
+
+backups/
+
+# --- Seguridad y Secretos ---
+.env
