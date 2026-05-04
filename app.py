@@ -1,13 +1,20 @@
 import os
 import sys
 from dotenv import load_dotenv
+import platform
 
 # --- 0. CONFIGURACIÓN CRÍTICA (DEBE IR ANTES QUE NADA) ---
 load_dotenv()
 TMDB_API_TOKEN = os.getenv("TMDB_API_TOKEN")
 
 # Definimos las rutas exactas
-os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk1.8.0_251"
+#os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk1.8.0_251"
+
+# Solo define JAVA_HOME manualmente si está en Windows
+if platform.system() == "Windows":
+    os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk1.8.0_251"
+# En la nube (Linux), Streamlit encontrará Java automáticamente gracias al packages.txt
+
 os.environ["HADOOP_HOME"] = r"C:\hadoop"
 # Forzamos a Spark a usar el Python de tu entorno virtual
 os.environ['PYSPARK_PYTHON'] = sys.executable
