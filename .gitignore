@@ -4,9 +4,9 @@ ml-25m/
 *.zip
 
 # --- Modelos y Persistencia (Archivos pesados) ---
-models/
-checkpoint/
-als_movie_recommender_model/
+#models/
+#checkpoint/
+#als_movie_recommender_model/
 
 # --- Entornos Virtuales (Librerías instaladas) ---
 .venv/
