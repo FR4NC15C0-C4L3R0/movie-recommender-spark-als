@@ -15,14 +15,33 @@ if platform.system() == "Windows":
     os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk1.8.0_251"
 # En la nube (Linux), Streamlit encontrará Java automáticamente gracias al packages.txt
 
-os.environ["HADOOP_HOME"] = r"C:\hadoop"
-# Forzamos a Spark a usar el Python de tu entorno virtual
+# --- CONFIGURACIÓN DE ENTORNO ---
+if platform.system() == "Windows":
+    # Todo lo que sea "C:\" se queda aquí dentro
+    os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jdk1.8.0_251"
+    os.environ["HADOOP_HOME"] = r"C:\hadoop"
+
+    # Añadimos al PATH solo en Windows
+    java_bin = os.path.join(os.environ["JAVA_HOME"], "bin")
+    hadoop_bin = os.path.join(os.environ["HADOOP_HOME"], "bin")
+    os.environ["PATH"] = java_bin + os.pathsep + hadoop_bin + os.pathsep + os.environ.get("PATH", "")
+else:
+    # En la NUBE (Linux), no necesitamos rutas de C:\
+    # El sistema ya tiene Java instalado por el packages.txt
+    pass
+
+# Esto sí se queda fuera porque sirve para ambos sistemas
 os.environ['PYSPARK_PYTHON'] = sys.executable
 os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
+
+#os.environ["HADOOP_HOME"] = r"C:\hadoop"
+# Forzamos a Spark a usar el Python de tu entorno virtual
+#os.environ['PYSPARK_PYTHON'] = sys.executable
+#os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
 # Añadimos al PATH
-os.environ["PATH"] = os.path.join(os.environ["JAVA_HOME"], "bin") + os.pathsep + \
-                     os.path.join(os.environ["HADOOP_HOME"], "bin") + os.pathsep + \
-                     os.environ.get("PATH", "")
+##os.environ["PATH"] = os.path.join(os.environ["JAVA_HOME"], "bin") + os.pathsep + \
+#                     os.path.join(os.environ["HADOOP_HOME"], "bin") + os.pathsep + \
+#                     os.environ.get("PATH", "")
 
 import streamlit as st
 import requests
