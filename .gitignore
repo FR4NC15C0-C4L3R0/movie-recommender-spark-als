@@ -1,7 +1,7 @@
 # --- Datos de MovieLens (Gb´s de información) ---
-ml-25m/
-*.csv
-*.zip
+#ml-25m/
+#*.csv
+#*.zip
 
 # --- Modelos y Persistencia (Archivos pesados) ---
 #models/
